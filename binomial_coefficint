@@ -1,0 +1,58 @@
+// Solves for binomial coefficients.
+// A binomial coefficient C(n, k) can be defined as the coefficient of X^k in the expansion of (1 + X)^n (www.geeksforgeeks.org)
+
+
+#include <iostream>
+#include <vector>
+#include <ctime>
+
+using namespace std;
+
+int bin(int n, int k){
+    if(k == 0) return 1;
+    if(n == 0) return 0;
+
+    return bin(n - 1, k - 1) + bin(n - 1, k);
+}
+
+int dp(int n, int k){
+    vector< vector<int> > dp(n + 1, vector<int>(k + 1, 0));
+
+    for(int x = 1; x <= n; x++){
+        dp[x][1] = x;
+    }
+
+    for(int i = 2; i <= n; i++){
+        for(int j = 2; j <= k; j++){
+            dp[i][j] = dp[ i - 1][ j - 1] + dp[i - 1][j];
+        }
+    }
+
+    return dp[n][k];
+}
+
+int main()
+{
+    clock_t start;
+    int n = 30;
+    int k = 17;
+
+    clock_t t1;
+    clock_t t2;
+
+    start = clock();
+
+    int cof = bin(n, k);
+
+    t1 = ( clock() - start) ;
+
+    start = clock();
+
+    int d = dp(n, k);
+
+    t2 = ( clock() - start) ;
+
+    cout << "took " << (t1/(double)CLOCKS_PER_SEC) << " secs using recursion: " << cof << endl;
+    cout << "took " << (t2/(double)CLOCKS_PER_SEC) << " secs using dynamic programming: " << d << endl;
+    return 0;
+}
