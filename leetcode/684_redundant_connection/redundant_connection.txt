@@ -1,7 +1,12 @@
 class Solution {
 public:
     
+    // Use union-find. In the case where two items you inputing
+    // have the same parent you have found the cyle.
+    
+    
     vector<int> parent;
+    
     
     int find(int i){
         if(i == parent[i]) return i;
@@ -39,7 +44,8 @@ public:
             if(!doUnion(v[0], v[1])){
                 ans = v;
                 break;
-            }            
+            }
+            
         }
 
         return ans;        
