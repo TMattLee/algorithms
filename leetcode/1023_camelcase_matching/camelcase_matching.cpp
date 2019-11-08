@@ -1,3 +1,5 @@
+// Trie solution uses more memory...
+
 typedef struct TrieNode{
     bool isEnd = false;
     unordered_map<char, TrieNode*> children;
@@ -23,7 +25,7 @@ public:
         temp->isEnd = true;
     }
     
-    bool isMatch(string & q){
+    bool isMatchTrie(string & q){
         
         temp = root;
         
@@ -50,6 +52,33 @@ public:
         return found;
     }
     
+    bool isMatch(string & q, string & p){
+        
+        int i = 0;
+        
+        bool found = false;
+        
+        for(char & c: q){
+            
+            if(found && isCap(c)) return false;
+            
+            if(i < p.length() && c != p[i]) {
+                if(isCap(c)) return false;
+                continue;
+            }
+            
+            i++;
+            
+            if(i == p.length()) {
+                
+                found = true;
+                
+            }
+        }
+        
+        return found;
+    }
+    
     vector<bool> camelMatch(vector<string>& queries, string pattern) {
         vector<bool> ans;
         
@@ -57,7 +86,7 @@ public:
         
         for(string & q: queries){
             
-            if(isMatch(q))ans.push_back(true);
+            if(isMatch(q, pattern))ans.push_back(true);
             else ans.push_back(false);
             
         }
