@@ -82,7 +82,7 @@ public:
     vector<bool> camelMatch(vector<string>& queries, string pattern) {
         vector<bool> ans;
         
-        insert(pattern);
+        //insert(pattern);
         
         for(string & q: queries){
             
