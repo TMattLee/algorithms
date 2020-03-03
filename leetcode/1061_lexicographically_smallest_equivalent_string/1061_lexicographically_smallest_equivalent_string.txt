@@ -1,0 +1,47 @@
+// Disjoint Set. During union the smallest argument becomes parent.
+
+class Solution {
+public:   
+    
+    int parent[256] = {0};    // Sets first element to zero. The other 255 elements are static and thus set to zero by default.
+    //int rank[256] = {0};    // Probably not needed.
+    
+    int find(int i){
+        if(parent[i] != i) parent[i] = find(parent[i]);
+        return parent[i];
+    }
+    
+    void doUnion(int a, int b){
+        int x = find(a);
+        int y = find(b);
+        
+        if(x < y){
+            parent[y] = x;
+        } else if (x > y){
+            parent[x] = y;
+        } else {
+            parent[y] = x;
+            //rank[y]++;
+        }
+    }
+    
+    string smallestEquivalentString(string A, string B, string S) {        
+        
+        // Initialize parents;
+        for(int i = 0; i < 256; i++){
+            parent[i] = i;
+        }
+        
+        //do union between all letter pairs.
+        for(int i = 0; i < A.length(); i++){
+            doUnion(A[i], B[i]);
+        }
+        
+        // Each element of S is set to its parent.
+        for(int i = 0; i < S.length(); i++){
+            S[i] = find(S[i]);
+        }
+        
+        return S;
+    }
+};
